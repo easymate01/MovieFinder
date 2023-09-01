@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33627.172
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieFInderServer", "MovieFInderServer\MovieFInderServer.csproj", "{80A4D333-66CA-4F75-8340-7AD7BF76A4C1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80A4D333-66CA-4F75-8340-7AD7BF76A4C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80A4D333-66CA-4F75-8340-7AD7BF76A4C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80A4D333-66CA-4F75-8340-7AD7BF76A4C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80A4D333-66CA-4F75-8340-7AD7BF76A4C1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C1230002-46C4-4C16-A0A2-64DD9B0A35C6}
+	EndGlobalSection
+EndGlobal
