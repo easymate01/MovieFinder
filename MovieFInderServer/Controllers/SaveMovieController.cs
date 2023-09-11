@@ -39,8 +39,6 @@ namespace MovieFInderServer.Controllers
 
         [HttpPost]
         [Route("api/savemovie")]
-        [HttpPost]
-        [Route("api/savemovie")]
         public async Task<ActionResult<SavedMovie>> SaveMovie(SavedMovieDTO savingmovie)
         {
             try

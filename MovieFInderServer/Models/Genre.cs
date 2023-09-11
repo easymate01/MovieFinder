@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace MovieFInderServer.Models
 {
@@ -9,6 +10,7 @@ namespace MovieFInderServer.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int GenreId { get; set; }
         public int MovieId { get; set; }
+        [JsonIgnore]
         public ICollection<SavedMovie>? Movies { get; set; }
     }
 }
