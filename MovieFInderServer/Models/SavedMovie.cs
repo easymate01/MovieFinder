@@ -16,5 +16,6 @@ namespace MovieFInderServer.Models
 
         public DateTime ReleaseDate { get; set; }
 
+        public ICollection<User> LikedByUsers { get; set; }
     }
 }
