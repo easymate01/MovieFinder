@@ -53,7 +53,7 @@ namespace MovieFInderServer.Controllers
                         ImageUrl = savingmovie.ImageUrl,
                         Owerview = savingmovie.Overview,
                         ReleaseDate = savingmovie.ReleaseDate,
-                        Genres = new List<Genre>() // Létrehoz egy üres Genre lista
+                        Genres = new List<Genre>()
                     };
 
                     await _movieRepository.Add(newMovie);
