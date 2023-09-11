@@ -3,6 +3,7 @@ using MovieFInderServer.Models;
 using MovieFInderServer.Models.DTOs;
 using MovieFInderServer.Services.Genres;
 using MovieFInderServer.Services.Movies;
+using MovieFInderServer.Services.Users;
 
 namespace MovieFInderServer.Controllers
 {
@@ -13,12 +14,13 @@ namespace MovieFInderServer.Controllers
         private readonly ILogger<SaveMovieController> _logger;
         private readonly IMovieRepository _movieRepository;
         private readonly IGenreRepository _genreRepository;
-
-        public SaveMovieController(ILogger<SaveMovieController> logger, IMovieRepository movieRepository, IGenreRepository genreRepository)
+        private readonly IUserService _userService;
+        public SaveMovieController(ILogger<SaveMovieController> logger, IMovieRepository movieRepository, IGenreRepository genreRepository, IUserService userService)
         {
             _logger = logger;
             _movieRepository = movieRepository;
             _genreRepository = genreRepository;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -39,10 +41,17 @@ namespace MovieFInderServer.Controllers
 
         [HttpPost]
         [Route("api/savemovie")]
-        public async Task<ActionResult<SavedMovie>> SaveMovie(SavedMovieDTO savingmovie)
+        public async Task<ActionResult<SavedMovie>> SaveMovie(SavedMovieDTO savingmovie, int userId)
         {
             try
             {
+                var user = await _userService.GetUserByIdAsync(userId);
+
+                if (user == null)
+                {
+                    return NotFound("User not found");
+                }
+
                 var existingMovie = await _movieRepository.GetMovieByName(savingmovie.Title);
 
                 if (existingMovie == null)
@@ -57,47 +66,52 @@ namespace MovieFInderServer.Controllers
                         Genres = new List<Genre>()
                     };
 
-                    await _movieRepository.Add(newMovie);
-
-                    // The movie exists, create the join with the genres
                     foreach (var genreId in savingmovie.GenreIds)
                     {
                         var genre = await _genreRepository.GetGenreByIdAsync(genreId);
+
                         if (genre == null)
                         {
                             genre = new Genre
                             {
-                                MovieId = newMovie.Id,
-                                GenreId = genreId
+                                GenreId = genreId,
+                                MovieId = newMovie.MovieId
                             };
                             await _genreRepository.AddGenre(genre);
                         }
+
                         newMovie.Genres.Add(genre);
                     }
 
-                    await _movieRepository.Update(newMovie);
+                    user.LikedMovies.Add(newMovie);
+                    await _movieRepository.Add(newMovie);
+                    await _userService.UpdateUser(user);
 
                     Console.WriteLine($"Movie: {savingmovie.Title} added to Database.");
                     return Ok(newMovie);
                 }
                 else
                 {
-                    // The movie exists, so only the join need to be created
+                    // Ha a film már létezik, csak a join táblákat kell létrehozni
                     foreach (var genreId in savingmovie.GenreIds)
                     {
                         var genre = await _genreRepository.GetGenreByIdAsync(genreId);
+
                         if (genre == null)
                         {
+                            // Ha a genre nem létezik, létrehozzuk
                             genre = new Genre
                             {
-                                MovieId = existingMovie.Id,
-                                GenreId = genreId
+                                GenreId = genreId,
+                                MovieId = existingMovie.MovieId
                             };
                             await _genreRepository.AddGenre(genre);
                         }
+
                         existingMovie.Genres.Add(genre);
                     }
 
+                    // A join táblákat mentjük
                     await _movieRepository.Update(existingMovie);
 
                     Console.WriteLine($"Genres added to existing movie: {existingMovie.Title}");
@@ -110,6 +124,7 @@ namespace MovieFInderServer.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
 
     }
 }
