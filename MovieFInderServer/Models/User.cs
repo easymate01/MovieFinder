@@ -1,11 +1,18 @@
-﻿namespace MovieFInderServer.Models
+﻿using System.Text.Json.Serialization;
+
+namespace MovieFInderServer.Models
 {
     public class User
     {
+        public User()
+        {
+            LikedMovies = new List<SavedMovie>();
+        }
+
         public int UserId { get; set; }
         public string UserName { get; set; }
-
         public string Password { get; set; }
-        public ICollection<SavedMovie> LikedMovies { get; set; }
+
+        [JsonIgnore] public ICollection<SavedMovie> LikedMovies { get; set; }
     }
 }

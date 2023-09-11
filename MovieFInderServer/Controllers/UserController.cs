@@ -19,13 +19,13 @@ namespace MovieFInderServer.Controllers
         public async Task<ActionResult> CreateUser(User user)
         {
             var existingUser = await _userService.GetUserByIdAsync(user.UserId);
-            if (existingUser == null)
+            if (existingUser != null)
             {
-                return NotFound("User not found");
+                return Conflict("User already exists");
             }
 
             await _userService.AddUser(user);
-            return Ok("user created.");
+            return Ok("User created.");
         }
     }
 }
