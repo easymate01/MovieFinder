@@ -79,7 +79,7 @@ namespace MovieFInderServer.Controllers
                             };
                             await _genreRepository.AddGenre(genre);
                         }
-
+                        // Here we add the joins
                         newMovie.Genres.Add(genre);
                     }
 
