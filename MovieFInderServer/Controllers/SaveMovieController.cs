@@ -49,6 +49,7 @@ namespace MovieFInderServer.Controllers
                 {
                     var newMovie = new SavedMovie
                     {
+                        MovieId = savingmovie.MovieId,
                         Title = savingmovie.Title,
                         ImageUrl = savingmovie.ImageUrl,
                         Owerview = savingmovie.Overview,
