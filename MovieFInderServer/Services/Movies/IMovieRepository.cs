@@ -1,6 +1,6 @@
 ﻿using MovieFInderServer.Models;
 
-namespace MovieFInderServer.Services.Repositories.Movies
+namespace MovieFInderServer.Services.Movies
 {
     public interface IMovieRepository
     {

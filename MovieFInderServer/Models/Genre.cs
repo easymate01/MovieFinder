@@ -1,11 +1,14 @@
-﻿using MovieFInderServer.Models.Entities;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MovieFInderServer.Models
 {
     public class Genre
     {
+        [Key]
         public int Id { get; set; }
+
+        public int GenreId { get; set; }
         public int MovieId { get; set; }
-        public ICollection<MovieGenre>? Movies { get; set; }
+        public ICollection<SavedMovie>? Movies { get; set; }
     }
 }

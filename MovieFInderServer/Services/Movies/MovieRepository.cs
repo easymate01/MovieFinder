@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MovieFInderServer.Datas;
 using MovieFInderServer.Models;
 
-namespace MovieFInderServer.Services.Repositories.Movies
+namespace MovieFInderServer.Services.Movies
 {
     public class MovieRepository : IMovieRepository
     {
