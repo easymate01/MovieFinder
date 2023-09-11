@@ -1,4 +1,8 @@
-﻿namespace MovieFInderServer.Services.Genres
+﻿using Microsoft.EntityFrameworkCore;
+using MovieFInderServer.Datas;
+using MovieFInderServer.Models;
+
+namespace MovieFInderServer.Services.Genres
 {
     public class GenreRepository : IGenreRepository
     {
@@ -12,6 +16,13 @@
         {
             using var dbContext = new MovieFinderContext();
             dbContext.Genres.Add(genre);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task Update(Genre genre)
+        {
+            using var dbContext = new MovieFinderContext();
+            dbContext.Genres.Update(genre);
             await dbContext.SaveChangesAsync();
         }
 

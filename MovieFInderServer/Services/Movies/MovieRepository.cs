@@ -25,6 +25,12 @@ namespace MovieFInderServer.Services.Movies
             dbContext.Add(movie);
             await dbContext.SaveChangesAsync();
         }
+        public async Task Update(SavedMovie movie)
+        {
+            using var dbContext = new MovieFinderContext();
+            dbContext.SavedMovies.Update(movie);
+            await dbContext.SaveChangesAsync();
+        }
 
         public async Task Delete(SavedMovie city)
         {

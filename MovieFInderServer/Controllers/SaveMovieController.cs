@@ -39,56 +39,87 @@ namespace MovieFInderServer.Controllers
 
         [HttpPost]
         [Route("api/savemovie")]
+        [HttpPost]
+        [Route("api/savemovie")]
         public async Task<ActionResult<SavedMovie>> SaveMovie(SavedMovieDTO savingmovie)
         {
-            var movie = await _movieRepository.GetMovieByName(savingmovie.Title);
             try
             {
-                if (movie == null)
+                // Ellenőrizd, hogy a film már létezik az adatbázisban a cím alapján
+                var existingMovie = await _movieRepository.GetMovieByName(savingmovie.Title);
+
+                if (existingMovie == null)
                 {
-                    movie = new SavedMovie
+                    // Ha a film még nem létezik, hozz létre egy újat
+                    var newMovie = new SavedMovie
                     {
-                        MovieId = savingmovie.MovieId,
                         Title = savingmovie.Title,
                         ImageUrl = savingmovie.ImageUrl,
                         Owerview = savingmovie.Overview,
                         ReleaseDate = savingmovie.ReleaseDate,
-                        Genres = new List<Genre>()
-
+                        Genres = new List<Genre>() // Létrehoz egy üres Genre lista
                     };
 
+                    // Hozz létre és mentsd el a filmet az adatbázisban
+                    await _movieRepository.Add(newMovie);
 
+                    // Most, hogy a film létezik, hozz létre és mentsd el a kapcsolatot a műfajokkal
                     foreach (var genreId in savingmovie.GenreIds)
                     {
-                        // Check if the genre exists in the database
                         var genre = await _genreRepository.GetGenreByIdAsync(genreId);
-
                         if (genre == null)
                         {
-                            // Create a new genre if it doesn't exist
+                            // Ha a műfaj még nem létezik, hozz létre egy újat
                             genre = new Genre
                             {
-                                GenreId = genreId,
-                                MovieId = savingmovie.MovieId,
+                                MovieId = newMovie.Id, // A film azonosítójával lásd el
+                                GenreId = genreId
                             };
-
-                            // Add the new genre to the database
                             await _genreRepository.AddGenre(genre);
                         }
+                        // Adj hozzá a műfajt a filmhez
+                        newMovie.Genres.Add(genre);
                     }
 
-                    await _movieRepository.Add(movie);
+                    // Mentsd el újra a filmet, hogy a kapcsolatok is mentésre kerüljenek
+                    await _movieRepository.Update(newMovie);
+
                     Console.WriteLine($"Movie: {savingmovie.Title} added to Database...");
-                    return Ok(movie);
+                    return Ok(newMovie);
+                }
+                else
+                {
+                    // A film már létezik az adatbázisban, ezért csak a kapcsolatot kell hozzáadni a műfajokkal
+                    foreach (var genreId in savingmovie.GenreIds)
+                    {
+                        var genre = await _genreRepository.GetGenreByIdAsync(genreId);
+                        if (genre == null)
+                        {
+                            // Ha a műfaj még nem létezik, hozz létre egy újat
+                            genre = new Genre
+                            {
+                                MovieId = existingMovie.Id, // A meglévő film azonosítójával lásd el
+                                GenreId = genreId
+                            };
+                            await _genreRepository.AddGenre(genre);
+                        }
+                        // Adj hozzá a műfajt a meglévő filmhez
+                        existingMovie.Genres.Add(genre);
+                    }
+
+                    // Mentsd el a meglévő filmet, hogy a kapcsolatok is mentésre kerüljenek
+                    await _movieRepository.Update(existingMovie);
+
+                    Console.WriteLine($"Genres added to existing movie: {existingMovie.Title}");
+                    return Ok(existingMovie);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while retrieving saved movies.");
+                _logger.LogError(ex, "An error occurred while processing your request.");
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
-
-            return Ok(movie);
         }
+
     }
 }

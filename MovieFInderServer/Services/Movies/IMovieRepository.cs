@@ -9,6 +9,7 @@ namespace MovieFInderServer.Services.Movies
         Task<SavedMovie> GetMovieByName(string movieName);
 
         Task Add(SavedMovie movie);
+        Task Update(SavedMovie movie);
         Task Delete(SavedMovie movie);
     }
 }
