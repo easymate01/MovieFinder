@@ -12,8 +12,8 @@ using MovieFInderServer.Datas;
 namespace MovieFInderServer.Migrations
 {
     [DbContext(typeof(MovieFinderContext))]
-    [Migration("20230911184442_UserConstruktor")]
-    partial class UserConstruktor
+    [Migration("20230911192302_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,13 +27,13 @@ namespace MovieFInderServer.Migrations
 
             modelBuilder.Entity("GenreSavedMovie", b =>
                 {
-                    b.Property<int>("GenresGenreId")
+                    b.Property<int>("GenresId")
                         .HasColumnType("int");
 
                     b.Property<int>("MoviesId")
                         .HasColumnType("int");
 
-                    b.HasKey("GenresGenreId", "MoviesId");
+                    b.HasKey("GenresId", "MoviesId");
 
                     b.HasIndex("MoviesId");
 
@@ -42,13 +42,16 @@ namespace MovieFInderServer.Migrations
 
             modelBuilder.Entity("MovieFInderServer.Models.Genre", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int>("GenreId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GenreId");
+                    b.HasKey("Id");
 
                     b.ToTable("Genres");
                 });
@@ -124,7 +127,7 @@ namespace MovieFInderServer.Migrations
                 {
                     b.HasOne("MovieFInderServer.Models.Genre", null)
                         .WithMany()
-                        .HasForeignKey("GenresGenreId")
+                        .HasForeignKey("GenresId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

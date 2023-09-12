@@ -5,7 +5,7 @@
 namespace MovieFInderServer.Migrations
 {
     /// <inheritdoc />
-    public partial class ConnectionString : Migration
+    public partial class Genreid : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

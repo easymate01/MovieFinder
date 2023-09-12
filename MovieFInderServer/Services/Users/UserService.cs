@@ -24,17 +24,7 @@ namespace MovieFInderServer.Services.Users
             try
             {
                 using var dbContext = new MovieFinderContext();
-
-                var existingUser = await dbContext.Users.FindAsync(user.UserId);
-
-                if (existingUser == null)
-                {
-                    throw new Exception("User not found");
-                }
-
-                existingUser.UserName = user.UserName;
-                existingUser.Password = user.Password;
-
+                dbContext.Users.Update(user);
                 await dbContext.SaveChangesAsync();
             }
             catch (Exception ex)

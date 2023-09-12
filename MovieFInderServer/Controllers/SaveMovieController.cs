@@ -75,14 +75,15 @@ namespace MovieFInderServer.Controllers
                             genre = new Genre
                             {
                                 GenreId = genreId,
-                                MovieId = newMovie.MovieId
                             };
                             await _genreRepository.AddGenre(genre);
                         }
                         // Here we add the joins
+                        genre.Movies.Add(newMovie);
                         newMovie.Genres.Add(genre);
                     }
 
+                    newMovie.LikedByUsers.Add(user);
                     user.LikedMovies.Add(newMovie);
                     await _movieRepository.Add(newMovie);
                     await _userService.UpdateUser(user);
@@ -99,21 +100,23 @@ namespace MovieFInderServer.Controllers
 
                         if (genre == null)
                         {
-                            // Ha a genre nem létezik, létrehozzuk
                             genre = new Genre
                             {
                                 GenreId = genreId,
-                                MovieId = existingMovie.MovieId
+
                             };
+
                             await _genreRepository.AddGenre(genre);
                         }
-
+                        genre.Movies.Add(existingMovie);
                         existingMovie.Genres.Add(genre);
                     }
 
                     // A join táblákat mentjük
-                    await _movieRepository.Update(existingMovie);
 
+                    user.LikedMovies.Add(existingMovie);
+                    existingMovie.LikedByUsers.Add(user);
+                    await _movieRepository.Update(existingMovie);
                     Console.WriteLine($"Genres added to existing movie: {existingMovie.Title}");
                     return Ok(existingMovie);
                 }
@@ -124,7 +127,5 @@ namespace MovieFInderServer.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
-
-
     }
 }

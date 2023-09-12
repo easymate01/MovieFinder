@@ -12,8 +12,8 @@ using MovieFInderServer.Datas;
 namespace MovieFInderServer.Migrations
 {
     [DbContext(typeof(MovieFinderContext))]
-    [Migration("20230911170937_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230911195353_Genreid")]
+    partial class Genreid
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,13 +27,13 @@ namespace MovieFInderServer.Migrations
 
             modelBuilder.Entity("GenreSavedMovie", b =>
                 {
-                    b.Property<int>("GenresGenreId")
+                    b.Property<int>("GenresId")
                         .HasColumnType("int");
 
                     b.Property<int>("MoviesId")
                         .HasColumnType("int");
 
-                    b.HasKey("GenresGenreId", "MoviesId");
+                    b.HasKey("GenresId", "MoviesId");
 
                     b.HasIndex("MoviesId");
 
@@ -42,13 +42,16 @@ namespace MovieFInderServer.Migrations
 
             modelBuilder.Entity("MovieFInderServer.Models.Genre", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int>("GenreId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GenreId");
+                    b.HasKey("Id");
 
                     b.ToTable("Genres");
                 });
@@ -84,17 +87,68 @@ namespace MovieFInderServer.Migrations
                     b.ToTable("SavedMovies");
                 });
 
+            modelBuilder.Entity("MovieFInderServer.Models.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("SavedMovieUser", b =>
+                {
+                    b.Property<int>("LikedByUsersUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LikedMoviesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LikedByUsersUserId", "LikedMoviesId");
+
+                    b.HasIndex("LikedMoviesId");
+
+                    b.ToTable("SavedMovieUser");
+                });
+
             modelBuilder.Entity("GenreSavedMovie", b =>
                 {
                     b.HasOne("MovieFInderServer.Models.Genre", null)
                         .WithMany()
-                        .HasForeignKey("GenresGenreId")
+                        .HasForeignKey("GenresId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MovieFInderServer.Models.SavedMovie", null)
                         .WithMany()
                         .HasForeignKey("MoviesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SavedMovieUser", b =>
+                {
+                    b.HasOne("MovieFInderServer.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("LikedByUsersUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MovieFInderServer.Models.SavedMovie", null)
+                        .WithMany()
+                        .HasForeignKey("LikedMoviesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -10,12 +10,12 @@ namespace MovieFInderServer.Models
         public string Title { get; set; }
 
         public string ImageUrl { get; set; }
-        public ICollection<Genre>? Genres { get; set; }
+        public ICollection<Genre>? Genres = new List<Genre>();
 
         public string Owerview { get; set; }
 
         public DateTime ReleaseDate { get; set; }
 
-        public ICollection<User> LikedByUsers { get; set; }
+        public ICollection<User> LikedByUsers = new List<User>();
     }
 }
