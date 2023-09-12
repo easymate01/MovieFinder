@@ -19,9 +19,14 @@ namespace MovieFInderServer.Datas
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.LikedMovies)
+                .WithMany(m => m.LikedByUsers);
+
+            modelBuilder.Entity<SavedMovie>()
+                .HasMany(m => m.Genres)
+                .WithMany(g => g.Movies);
 
         }
-
-
     }
 }
