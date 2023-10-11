@@ -1,0 +1,246 @@
+body {
+  overflow-x: hidden;
+  font-family: "Montserrat", helvetica, arial, sans-serif;
+  margin: 0;
+}
+#root {
+  background: linear-gradient(#5e5e5e, #202020);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  /* background: linear-gradient(#fff, #999); */
+}
+
+* {
+  user-select: none;
+}
+
+.app {
+  overflow: hidden;
+}
+
+.app > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.row {
+  flex-direction: row !important;
+}
+
+.row > * {
+  margin: 5px;
+}
+
+h1 {
+  font-family: "Damion", cursive;
+  color: #fff;
+  text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+  color: #fff;
+}
+
+.swipe {
+  position: absolute;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 20px;
+}
+
+.cardContainer {
+  width: 90vw;
+  max-width: 260px;
+  height: 500px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+  margin-top: 60px;
+}
+
+.card {
+  position: relative;
+  background-color: #fff;
+  width: 430px;
+  max-width: 400px;
+  height: 570px;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+}
+.wrapper {
+  background: linear-gradient(#4e4e4e17, #141414bf);
+  border-radius: 20px;
+  height: 570px;
+}
+.overview {
+  height: 570px;
+  display: flex;
+  align-items: center;
+  color: white;
+  background: linear-gradient(#141414dc, #141414);
+}
+.overview > div {
+  font-size: 24px;
+  padding: 25px;
+}
+.genre {
+  display: block;
+  margin-top: 20px;
+}
+
+.cardContent {
+  width: 100%;
+  height: 100%;
+}
+
+.card h3 {
+  text-align: left;
+  position: absolute;
+  bottom: 80px;
+  font-size: 24px;
+  color: #fff;
+  padding-left: 20px;
+}
+.card h4 {
+  position: absolute;
+  text-align: left;
+  bottom: 34px;
+  margin: 10px;
+  color: #d9d9d9;
+  padding-left: 10px;
+  font-weight: 200;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300px;
+}
+.card p {
+  position: absolute;
+  bottom: 0px;
+  margin: 10px;
+  font-size: 15px;
+  color: #acacac;
+  padding-left: 10px;
+}
+
+.infoText {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  color: #fff;
+  animation-name: popup;
+  animation-duration: 800ms;
+}
+
+.buttons {
+  margin: 20px;
+  display: flex;
+}
+
+.buttons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  background-color: #7c7c7c;
+  transition: 200ms;
+  margin: 10px;
+  font-weight: bolder;
+  width: 80px;
+  height: 80px;
+  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.buttons button:hover {
+  transform: scale(1.05);
+  background-color: #797979;
+}
+
+.navbar {
+  z-index: 10;
+  display: flex;
+  position: fixed;
+  bottom: 20px;
+  width: 400px;
+  background-color: rgb(216, 216, 216);
+  height: auto;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  justify-content: space-around;
+}
+.nav {
+  width: 64px;
+  border-radius: 20px;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  border: 1px solid transparent;
+}
+.active-nav {
+  background-color: #a3a3a3;
+}
+
+/*----MOBILE VIEW ----*/
+@media (max-width: 625px) {
+  .buttons {
+    justify-content: center;
+  }
+  .cardContainer {
+    height: 410px;
+    margin-top: 30px !important;
+    margin-bottom: 80px;
+  }
+  .navbar {
+    bottom: 5px !important;
+    width: 300px !important;
+    padding: 2px;
+  }
+  .card {
+    max-width: 300px;
+    height: 450px;
+  }
+}
+.select_genre {
+  border-radius: 10px;
+  border-color: black;
+  background-color: darkgray;
+}
+@keyframes popup {
+  0% {
+    transform: scale(1, 1);
+  }
+  10% {
+    transform: scale(1.1, 1.1);
+  }
+  30% {
+    transform: scale(0.9, 0.9);
+  }
+  50% {
+    transform: scale(1, 1);
+  }
+  57% {
+    transform: scale(1, 1);
+  }
+  64% {
+    transform: scale(1, 1);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
