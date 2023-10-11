@@ -10,6 +10,6 @@ namespace MovieFInderServer.Services.Movies
 
         Task Add(SavedMovie movie);
         Task Update(SavedMovie movie);
-        Task Delete(SavedMovie movie);
+        Task Delete(int id);
     }
 }

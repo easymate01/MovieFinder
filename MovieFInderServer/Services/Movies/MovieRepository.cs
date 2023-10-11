@@ -32,10 +32,11 @@ namespace MovieFInderServer.Services.Movies
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(SavedMovie city)
+        public async Task Delete(int id)
         {
             using var dbContext = new MovieFinderContext();
-            dbContext.Remove(city);
+            var movieToDelete = await dbContext.SavedMovies.FirstOrDefaultAsync(movie => movie.Id == id);
+            dbContext.Remove(movieToDelete);
             await dbContext.SaveChangesAsync();
         }
 

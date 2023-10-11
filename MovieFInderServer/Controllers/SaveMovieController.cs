@@ -111,5 +111,12 @@ namespace MovieFInderServer.Controllers
             }
         }
 
+        [HttpDelete]
+        [Route("api/delete/{id}")]
+        public async Task<ActionResult<SavedMovie>> SaveMovie(int id)
+        {
+            await _movieRepository.Delete(id);
+            return Ok($"Movie with id: {id} has been deleted.");
+        }
     }
 }
