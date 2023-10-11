@@ -1,6 +1,5 @@
 using MovieFInderServer.Services.Genres;
 using MovieFInderServer.Services.Movies;
-using MovieFInderServer.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +11,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IMovieRepository, MovieRepository>();
 builder.Services.AddTransient<IGenreRepository, GenreRepository>();
-builder.Services.AddTransient<IUserService, UserService>();
 
 var app = builder.Build();
 

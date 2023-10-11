@@ -10,7 +10,7 @@ namespace MovieFInderServer.Services.Movies
         public async Task<IEnumerable<SavedMovie>> GetAllAsync()
         {
             using var dbContext = new MovieFinderContext();
-            return await dbContext.SavedMovies.Include(g => g.Genres).ToListAsync();
+            return await dbContext.SavedMovies.ToListAsync();
         }
 
         public async Task<SavedMovie> GetMovieByName(string movieName)

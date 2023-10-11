@@ -7,9 +7,10 @@ namespace MovieFInderServer.Models
     public class Genre
     {
         [Key]
-        public int Id { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.None)] public int GenreId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int GenreId { get; set; }
+        public int MovieId { get; set; }
         [JsonIgnore]
-        public ICollection<SavedMovie>? Movies = new List<SavedMovie>();
+        public ICollection<SavedMovie>? Movies { get; set; }
     }
 }
