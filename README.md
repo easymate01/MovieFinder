@@ -19,9 +19,9 @@ Movie Finder is a web application built using React.js and ASP.NET Entity Framew
 
 - **Swipe Movies:** Swipe right if you like a movie, left if you don't. The app learns your preferences over time.
 - **Save Favorites:** Movies you swipe right on are automatically saved to your account for future reference.
-- **User Accounts:** Sign in to access your saved movies from any device.
-- **Personalized Recommendations:** Get movie recommendations based on your swiping history.
-- **Search Functionality:** Find specific movies or genres easily.
+- **User Accounts:** Sign in to access your saved movies from any device. (UPCOMING FEATURE)
+- **Personalized Recommendations:** Get movie recommendations based on your swiping history. (UPCOMING FEATURE)
+- **Search Functionality:** Find specific movies or genres easily. (UPCOMING FEATURE)
 
 ## Technologies
 
@@ -29,7 +29,7 @@ This project is built using the following technologies:
 
 - **React.js:** A popular JavaScript library for building user interfaces.
 - **ASP.NET Core:** A framework for building server-side applications.
-- **Entity Framework Core:** An Object-Relational Mapping (ORM) framework for .NET, used for the backend.
+- **Entity Framework Core:** An Object-Relational Mapping (ORM) framework for .NET, used for the backend. (UPCOMING FEATURE)
 - **Azure SQL Database:** Used for storing user accounts and movie data.
 - **Azure Cloud Services:** For hosting and deploying the application.
 
