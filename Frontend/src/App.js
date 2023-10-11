@@ -82,7 +82,9 @@ function App() {
       <div className="card-section">
         {swiper && <Card movieDatas={movieDatas} />}
       </div>
-      <div>{isActive2 && <Likes movieDatas={savedMovies} />}</div>
+      <div className="liked-movies-section">
+        {isActive2 && <Likes movieDatas={savedMovies} />}
+      </div>
 
       <section className="navbar-section">
         <Navbar

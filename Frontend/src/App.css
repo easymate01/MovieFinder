@@ -12,6 +12,7 @@ body {
   height: 100vh;
   max-height: 100vh;
   overflow: hidden;
+  overflow-y: auto;
   /* background: linear-gradient(#fff, #999); */
 }
 

@@ -16,7 +16,7 @@ function Card({ movieDatas }) {
   const [likedMovies, setLikedMovies] = useState([]);
   const [genres, setGenres] = useState([]);
   const [getOverview, setGetOverview] = useState(false);
-  // used for outOfFrame closure
+
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
@@ -50,7 +50,6 @@ function Card({ movieDatas }) {
     updateCurrentIndex(index - 1);
     setGetOverview(false);
   };
-
   const outOfFrame = useCallback(
     (name, idx, movieId, direction, url, overview, genres, release_date) => {
       if (direction === "right") {
@@ -98,7 +97,6 @@ function Card({ movieDatas }) {
         genreIds,
         overview,
         releaseDate,
-        genres,
       };
       console.log(genres);
 

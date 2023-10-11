@@ -17,10 +17,16 @@ function Likes({ movieDatas }) {
   }
 
   function sortMovies(movies) {
-    return movies.filter((movie) => {
-      if (selectedGenre === "All") return true;
+    if (selectedGenre === "All") {
+      return movies;
+    }
+
+    const filteredMovies = movies.filter((movie) => {
       return movie.genres.includes(selectedGenre);
     });
+
+    console.log(filteredMovies); // Log the filtered array
+    return filteredMovies;
   }
 
   function uniqueGenres(movies) {
@@ -31,7 +37,6 @@ function Likes({ movieDatas }) {
     const genresSet = new Set(allGenres);
     return ["All", ...Array.from(genresSet)];
   }
-
   const sortedMovies = sortMovies([...movieDatas]);
   return (
     <div>
@@ -54,7 +59,7 @@ function Likes({ movieDatas }) {
               <h1>{movie.title}</h1>
             </div>
             <div className="movie_desc">
-              <p className="text">{movie.overview}</p>
+              <p className="text">{movie.owerview}</p>
             </div>
             <div>
               <a
